@@ -1,7 +1,7 @@
-// ignore_for_file: constant_identifier_names
-
 import 'package:get/get.dart';
 
+import '../modules/Bazaar/bindings/bazaar_binding.dart';
+import '../modules/Bazaar/views/bazaar_view.dart';
 import '../modules/add_money/bindings/add_money_binding.dart';
 import '../modules/add_money/views/add_money_view.dart';
 import '../modules/bottom_navigation/bindings/bottom_navigation_binding.dart';
@@ -16,6 +16,8 @@ import '../modules/sign_up/bindings/sign_up_binding.dart';
 import '../modules/sign_up/views/sign_up_view.dart';
 import '../modules/withdraw_page/bindings/withdraw_page_binding.dart';
 import '../modules/withdraw_page/views/withdraw_page_view.dart';
+
+// ignore_for_file: constant_identifier_names
 
 part 'app_routes.dart';
 
@@ -59,6 +61,11 @@ class AppPages {
       name: _Paths.RESULT_PAGE,
       page: () => const ResultPageView(),
       binding: ResultPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.BAZAAR,
+      page: () => const BazaarView(),
+      binding: BazaarBinding(),
     ),
   ];
 }

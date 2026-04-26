@@ -9,17 +9,17 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
-    final c = Get.put(HomeController());
+    Get.put(HomeController());
     final primaryColor = const Color(0xFF7B61FF);
 
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
 
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 1,
+
+        /// 🔹 Profile Name
         title: Obx(() {
           if (controller.isProfileLoading.value) {
             return const Text(
@@ -31,42 +31,46 @@ class HomeView extends GetView<HomeController> {
           final name = controller.profileData['name'] ?? 'User';
 
           return Text(
-            "Welcome \n$name",
+            "Welcome\n$name",
             style: const TextStyle(color: Colors.black),
           );
         }),
+
+        /// 🔹 FIXED ACTIONS (NO OVERFLOW)
         actions: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 const Icon(Icons.currency_exchange, color: Colors.purple),
                 SizedBox(width: 5.w),
                 const Text("Rs"),
                 SizedBox(width: 8.w),
 
-                /// Balance box
+                /// Wallet
                 Container(
                   padding: EdgeInsets.symmetric(
-                    horizontal: 12.w,
-                    vertical: 6.h,
+                    horizontal: 10.w,
+                    vertical: 5.h,
                   ),
                   decoration: BoxDecoration(
                     color: Colors.green,
                     borderRadius: BorderRadius.circular(8.r),
                   ),
                   child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Obx(() {
-                        final walletblz = controller.wallet['balance'] ?? '0';
+                        final balance = controller.wallet['balance'] ?? '0';
 
                         return Text(
-                          walletblz.toString(),
+                          balance.toString(),
                           style: const TextStyle(color: Colors.white),
                         );
                       }),
-                      SizedBox(width: 5),
-                      Icon(
+                      const SizedBox(width: 5),
+                      const Icon(
                         Icons.account_balance_wallet,
                         color: Colors.white,
                         size: 16,
@@ -75,9 +79,9 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ),
 
-                SizedBox(width: 10.w),
-                const Icon(Icons.call, color: Colors.green),
                 SizedBox(width: 8.w),
+                const Icon(Icons.call, color: Colors.green),
+                SizedBox(width: 6.w),
                 const Icon(Icons.logout_rounded, color: Colors.purple),
               ],
             ),
@@ -85,12 +89,12 @@ class HomeView extends GetView<HomeController> {
         ],
       ),
 
-      /// Body
+      /// 🔹 BODY
       body: SingleChildScrollView(
         padding: EdgeInsets.all(12.w),
         child: Column(
           children: [
-            /// Purple Banner
+            /// Banner
             Container(
               height: 60.h,
               width: double.infinity,
@@ -101,15 +105,12 @@ class HomeView extends GetView<HomeController> {
                 ),
                 borderRadius: BorderRadius.circular(16.r),
               ),
-              child: const Text(
-                "-",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
+              child: const Text("-", style: TextStyle(color: Colors.white)),
             ),
 
             SizedBox(height: 15.h),
 
-            /// Add Money & Withdraw
+            /// Actions
             Row(
               children: [
                 Expanded(child: _actionCard("Add Money")),
@@ -120,34 +121,39 @@ class HomeView extends GetView<HomeController> {
 
             SizedBox(height: 15.h),
 
-            /// Grid Items
-            GridView.count(
-              crossAxisCount: 2,
-              shrinkWrap: true,
-              crossAxisSpacing: 10.w,
-              mainAxisSpacing: 10.h,
-              physics: const NeverScrollableScrollPhysics(),
-              childAspectRatio: 1.6,
-              children: [
-                _gridCard("KOLKATA FATAFAT"),
-                _gridCard("MORNING FATAFAT"),
-                _gridCard("MUMBAI FATAFAT"),
-                _gridCard("DAY FATAFAT"),
-                _gridCard("INDIA FATAFAT"),
-                _gridCard("ASIA FATAFAT"),
-                _gridCard("EVENING FATAFAT"),
-                _gridCard("WORLD FATAFAT"),
-                _gridCard("BENGAL FATAFAT"),
-                _gridCard("NIGHT FATAFAT"),
-              ],
-            ),
+            /// 🔥 CATEGORY GRID
+            Obx(() {
+              if (controller.isCategoryLoading.value) {
+                return const CircularProgressIndicator();
+              }
+
+              if (controller.categories.isEmpty) {
+                return const Text("No Categories Found");
+              }
+
+              return GridView.builder(
+                itemCount: controller.categories.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10.w,
+                  mainAxisSpacing: 10.h,
+                  childAspectRatio: 1.6,
+                ),
+                itemBuilder: (context, index) {
+                  final item = controller.categories[index];
+                  return _gridCard(item);
+                },
+              );
+            }),
           ],
         ),
       ),
     );
   }
 
-  /// Green Action Card
+  /// 🔹 Action Card
   Widget _actionCard(String title) {
     return Container(
       height: 80.h,
@@ -155,35 +161,39 @@ class HomeView extends GetView<HomeController> {
       decoration: BoxDecoration(
         color: Colors.green,
         borderRadius: BorderRadius.circular(14.r),
-        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5)],
       ),
       child: Text(
         title,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w500,
-        ),
+        style: TextStyle(color: Colors.white, fontSize: 16.sp),
       ),
     );
   }
 
-  /// Yellow Grid Card
-  Widget _gridCard(String title) {
-    return Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: Colors.yellow,
-        borderRadius: BorderRadius.circular(14.r),
-        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5)],
-      ),
-      child: Text(
-        title,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Colors.purple,
-          fontSize: 14.sp,
-          fontWeight: FontWeight.w600,
+  /// 🔹 Grid Card (FIXED)
+  Widget _gridCard(Map<String, dynamic> item) {
+    final title = item['name']?.toString() ?? '';
+
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed(
+          "/bazaar",
+          arguments: {"category_id": item['id'] ?? 0, "category_name": title},
+        );
+      },
+      child: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Colors.yellow,
+          borderRadius: BorderRadius.circular(14.r),
+        ),
+        child: Text(
+          title,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.purple,
+            fontSize: 22.sp,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );

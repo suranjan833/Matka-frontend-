@@ -11,6 +11,7 @@ abstract class Routes {
   static const ADD_MONEY = _Paths.ADD_MONEY;
   static const WITHDRAW_PAGE = _Paths.WITHDRAW_PAGE;
   static const RESULT_PAGE = _Paths.RESULT_PAGE;
+  static const BAZAAR = _Paths.BAZAAR;
 }
 
 abstract class _Paths {
@@ -22,4 +23,5 @@ abstract class _Paths {
   static const ADD_MONEY = '/add-money';
   static const WITHDRAW_PAGE = '/withdraw-page';
   static const RESULT_PAGE = '/result-page';
+  static const BAZAAR = '/bazaar';
 }
