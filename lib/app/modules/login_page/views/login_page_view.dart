@@ -42,9 +42,11 @@ class LoginPageView extends GetView<LoginPageController> {
 
               /// Phone Field
               TextField(
+                maxLength: 10,
                 controller: controller.emailController, // 🔥 use controller
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
+                  counterText: "",
                   hintText: "Phone Number",
                   prefixIcon: Icon(Icons.phone, color: primaryColor),
                   filled: true,

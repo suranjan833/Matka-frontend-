@@ -93,7 +93,7 @@ class BazaarView extends GetView<BazaarController> {
               onTap: isRunning
                   ? () {
                       /// ✅ only when RUNNING
-                      Get.toNamed("/game", arguments: item);
+                      Get.toNamed("/gametypes", arguments: item);
                     }
                   : null, // ❌ disable click
 

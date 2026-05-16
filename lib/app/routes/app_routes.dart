@@ -12,6 +12,8 @@ abstract class Routes {
   static const WITHDRAW_PAGE = _Paths.WITHDRAW_PAGE;
   static const RESULT_PAGE = _Paths.RESULT_PAGE;
   static const BAZAAR = _Paths.BAZAAR;
+  static const GAMETYPES = _Paths.GAMETYPES;
+  static const PLACE_BET = _Paths.PLACE_BET;
 }
 
 abstract class _Paths {
@@ -24,4 +26,6 @@ abstract class _Paths {
   static const WITHDRAW_PAGE = '/withdraw-page';
   static const RESULT_PAGE = '/result-page';
   static const BAZAAR = '/bazaar';
+  static const GAMETYPES = '/gametypes';
+  static const PLACE_BET = '/place-bet';
 }

@@ -2,10 +2,14 @@ import 'package:get/get.dart';
 
 import '../modules/Bazaar/bindings/bazaar_binding.dart';
 import '../modules/Bazaar/views/bazaar_view.dart';
+import '../modules/PlaceBet/bindings/place_bet_binding.dart';
+import '../modules/PlaceBet/views/place_bet_view.dart';
 import '../modules/add_money/bindings/add_money_binding.dart';
 import '../modules/add_money/views/add_money_view.dart';
 import '../modules/bottom_navigation/bindings/bottom_navigation_binding.dart';
 import '../modules/bottom_navigation/views/bottom_navigation_view.dart';
+import '../modules/gametypes/bindings/gametypes_binding.dart';
+import '../modules/gametypes/views/gametypes_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login_page/bindings/login_page_binding.dart';
@@ -66,6 +70,16 @@ class AppPages {
       name: _Paths.BAZAAR,
       page: () => const BazaarView(),
       binding: BazaarBinding(),
+    ),
+    GetPage(
+      name: _Paths.GAMETYPES,
+      page: () => const GameTypesView(),
+      binding: GametypesBinding(),
+    ),
+    GetPage(
+      name: _Paths.PLACE_BET,
+      page: () => const PlaceBetView(),
+      binding: PlaceBetBinding(),
     ),
   ];
 }
