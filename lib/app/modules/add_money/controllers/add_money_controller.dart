@@ -13,6 +13,7 @@ class AddMoneyController extends GetxController {
   final transactionIdController = TextEditingController();
 
   var selectedAmount = 0.obs;
+  var hasAmount = false.obs;
   var selectedPayment = ''.obs;
   var selectedImage = Rx<File?>(null);
 
@@ -27,6 +28,7 @@ class AddMoneyController extends GetxController {
     if (isTimerActive.value) return;
     selectedAmount.value = amount;
     amountController.text = amount.toString();
+    hasAmount.value = true;
   }
 
   void selectPayment(String method) {

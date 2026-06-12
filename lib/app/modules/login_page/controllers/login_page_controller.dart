@@ -10,6 +10,11 @@ class LoginPageController extends GetxController {
   final passwordController = TextEditingController();
 
   var isLoading = false.obs;
+  var isPasswordVisible = false.obs;
+
+  void togglePasswordVisibility() {
+    isPasswordVisible.value = !isPasswordVisible.value;
+  }
 
   Future<void> login() async {
     if (emailController.text.trim().isEmpty ||

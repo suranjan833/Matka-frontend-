@@ -14,10 +14,15 @@ class WithdrawPageController extends GetxController {
   final upiController = TextEditingController();
 
   var isLoading = false.obs;
+  var selectedAmount = 0.obs;
+  var hasAmount = false.obs;
+  var hasBankOrUpi = false.obs;
 
   /// 🔥 Quick Amount
   void setAmount(int amount) {
+    selectedAmount.value = amount;
     amountController.text = amount.toString();
+    hasAmount.value = true;
   }
 
   /// 🔥 Submit Withdraw
@@ -66,6 +71,22 @@ class WithdrawPageController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    _setupListeners();
+  }
+
+  void _setupListeners() {
+    amountController.addListener(() => hasAmount.value = amountController.text.isNotEmpty);
+    accountController.addListener(_updateHasBankOrUpi);
+    upiController.addListener(_updateHasBankOrUpi);
+  }
+
+  void _updateHasBankOrUpi() {
+    hasBankOrUpi.value = accountController.text.isNotEmpty || upiController.text.isNotEmpty;
   }
 
   @override

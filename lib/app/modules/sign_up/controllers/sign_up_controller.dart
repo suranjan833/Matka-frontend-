@@ -14,6 +14,16 @@ class SignUpController extends GetxController {
 
   // 🔹 Loading State
   var isLoading = false.obs;
+  var isPasswordVisible = false.obs;
+  var isConfirmPasswordVisible = false.obs;
+
+  void togglePasswordVisibility() {
+    isPasswordVisible.value = !isPasswordVisible.value;
+  }
+
+  void toggleConfirmPasswordVisibility() {
+    isConfirmPasswordVisible.value = !isConfirmPasswordVisible.value;
+  }
 
   // 🔹 Signup Function
   Future<void> signUp() async {
