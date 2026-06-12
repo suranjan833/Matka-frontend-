@@ -92,7 +92,7 @@ class WithdrawPageView extends GetView<WithdrawPageController> {
                       vertical: 10.h,
                     ),
                     decoration: BoxDecoration(
-                      color: primaryColor.withOpacity(.1),
+                      color: primaryColor.withValues(alpha: .1),
                       borderRadius: BorderRadius.circular(10.r),
                     ),
                     child: Text(

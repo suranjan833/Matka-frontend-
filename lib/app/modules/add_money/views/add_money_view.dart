@@ -98,7 +98,7 @@ class AddMoneyView extends GetView<AddMoneyController> {
                       decoration: BoxDecoration(
                         color: controller.isTimerActive.value
                             ? Colors.grey.shade300
-                            : primaryColor.withOpacity(.1),
+                            : primaryColor.withValues(alpha: .1),
                         borderRadius: BorderRadius.circular(10.r),
                       ),
                       child: Text(
