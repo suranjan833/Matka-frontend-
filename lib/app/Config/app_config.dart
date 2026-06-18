@@ -18,6 +18,7 @@ const String USER_OTP = "MY OTP";
 const String REFERRAL_CODE = "referral_code";
 const String FORGOTFIELD = "forgot-feild-data";
 const String TEACHER_NAME = "teacher_name";
+const String USER_NAME = "user_name";
 
 var isDebugMode = true.obs;
 

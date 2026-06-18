@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../BottomNavigation/controllers/bottom_navigation_controller.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -74,25 +75,35 @@ class HomeView extends GetView<HomeController> {
       ),
       child: Row(
         children: [
-          Container(
-            width: 40.w,
-            height: 40.w,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [primaryColor, Color(0xff0B5ED7)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(12.r),
-              boxShadow: [
-                BoxShadow(
-                  color: primaryColor.withValues(alpha: .25),
-                  blurRadius: 8,
-                  offset: const Offset(0, 3),
+          GestureDetector(
+            onTap: () {
+              final navController = Get.find<BottomNavigationController>();
+              navController.openDrawer();
+            },
+            child: Container(
+              width: 40.w,
+              height: 40.w,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [primaryColor, Color(0xff0B5ED7)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
-              ],
+                borderRadius: BorderRadius.circular(12.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: primaryColor.withValues(alpha: .25),
+                    blurRadius: 8,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Icon(
+                Icons.casino_rounded,
+                color: Colors.white,
+                size: 20.sp,
+              ),
             ),
-            child: Icon(Icons.casino_rounded, color: Colors.white, size: 20.sp),
           ),
           SizedBox(width: 12.w),
           Column(
@@ -120,8 +131,6 @@ class HomeView extends GetView<HomeController> {
           ),
           const Spacer(),
           _headerIcon(Icons.notifications_outlined),
-          SizedBox(width: 8.w),
-          _headerIcon(Icons.more_vert_rounded),
         ],
       ),
     );

@@ -12,6 +12,10 @@ import '../modules/SignUpView/bindings/sign_up_view_binding.dart';
 import '../modules/SignUpView/views/sign_up_view_view.dart';
 import '../modules/Wallet/bindings/wallet_binding.dart';
 import '../modules/Wallet/views/wallet_view.dart';
+import '../modules/AccountStatement/bindings/account_statement_binding.dart';
+import '../modules/AccountStatement/views/account_statement_view.dart';
+import '../modules/TermsConditions/bindings/terms_conditions_binding.dart';
+import '../modules/TermsConditions/views/terms_conditions_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 
@@ -57,6 +61,16 @@ class AppPages {
       name: _Paths.WALLET,
       page: () => const WalletView(),
       binding: WalletBinding(),
+    ),
+    GetPage(
+      name: _Paths.ACCOUNT_STATEMENT,
+      page: () => const AccountStatementView(),
+      binding: AccountStatementBinding(),
+    ),
+    GetPage(
+      name: _Paths.TERMS_CONDITIONS,
+      page: () => const TermsConditionsView(),
+      binding: TermsConditionsBinding(),
     ),
   ];
 }

@@ -41,7 +41,10 @@ class LoginPageController extends GetxController {
         if (res['status'] == 200) {
           var token = res['data']?['token'];
           var userId = res['data']['id'];
+          var userName = res['data']['name'] ?? res['data']['phone'] ?? '';
           getBox.write(USER_ID, userId);
+          getBox.write(USER_EMAIL, emailController.text.trim());
+          getBox.write(USER_NAME, userName.toString());
           if (token != null) {
             getBox.write(USER_TOKEN, token);
           }

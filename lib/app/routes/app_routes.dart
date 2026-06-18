@@ -10,6 +10,8 @@ abstract class Routes {
   static const BOTTOM_NAVIGATION = _Paths.BOTTOM_NAVIGATION;
   static const ALL_BIDS = _Paths.ALL_BIDS;
   static const WALLET = _Paths.WALLET;
+  static const ACCOUNT_STATEMENT = _Paths.ACCOUNT_STATEMENT;
+  static const TERMS_CONDITIONS = _Paths.TERMS_CONDITIONS;
 }
 
 abstract class _Paths {
@@ -21,4 +23,6 @@ abstract class _Paths {
   static const BOTTOM_NAVIGATION = '/bottom-navigation';
   static const ALL_BIDS = '/all-bids';
   static const WALLET = '/wallet';
+  static const ACCOUNT_STATEMENT = '/account-statement';
+  static const TERMS_CONDITIONS = '/terms-conditions';
 }
