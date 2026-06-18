@@ -12,6 +12,8 @@ abstract class Routes {
   static const WALLET = _Paths.WALLET;
   static const ACCOUNT_STATEMENT = _Paths.ACCOUNT_STATEMENT;
   static const TERMS_CONDITIONS = _Paths.TERMS_CONDITIONS;
+  static const GAME_PAGE = _Paths.GAME_PAGE;
+  static const BET_INPUT = _Paths.BET_INPUT;
 }
 
 abstract class _Paths {
@@ -25,4 +27,6 @@ abstract class _Paths {
   static const WALLET = '/wallet';
   static const ACCOUNT_STATEMENT = '/account-statement';
   static const TERMS_CONDITIONS = '/terms-conditions';
+  static const GAME_PAGE = '/game-page';
+  static const BET_INPUT = '/bet-input';
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../routes/app_pages.dart';
 import '../../BottomNavigation/controllers/bottom_navigation_controller.dart';
 import '../controllers/home_controller.dart';
 
@@ -428,7 +429,9 @@ class HomeView extends GetView<HomeController> {
           borderRadius: BorderRadius.circular(18.r),
           child: InkWell(
             borderRadius: BorderRadius.circular(18.r),
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(Routes.GAME_PAGE, arguments: market);
+            },
             child: Padding(
               padding: EdgeInsets.all(16.w),
               child: Column(
