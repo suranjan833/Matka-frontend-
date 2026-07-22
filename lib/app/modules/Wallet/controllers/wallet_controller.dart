@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../AddFund/views/add_fund_view.dart';
+import '../ManualDeposit/views/manual_deposit_view.dart';
+import '../WithdrawFunds/views/withdraw_funds_view.dart';
+import '../DepositHistory/views/deposit_history_view.dart';
+import '../WithdrawalHistory/views/withdrawal_history_view.dart';
+import '../AddBankDetails/views/add_bank_details_view.dart';
+
 class WalletController extends GetxController {
   RxDouble walletBalance = 0.0.obs;
 
@@ -40,27 +47,27 @@ class WalletController extends GetxController {
   void onMenuTap(int index) {
     switch (index) {
       case 0:
-        // Get.to(() => AddFundView());
+        Get.to(() => const AddFundView());
         break;
 
       case 1:
-        // Get.to(() => UploadDepositView());
+        Get.to(() => const ManualDepositView());
         break;
 
       case 2:
-        // Get.to(() => WithdrawView());
+        Get.to(() => const WithdrawFundsView());
         break;
 
       case 3:
-        // Get.to(() => DepositHistoryView());
+        Get.to(() => const DepositHistoryView());
         break;
 
       case 4:
-        // Get.to(() => WithdrawalHistoryView());
+        Get.to(() => const WithdrawalHistoryView());
         break;
 
       case 5:
-        // Get.to(() => AddBankView());
+        Get.to(() => const AddBankDetailsView());
         break;
     }
   }

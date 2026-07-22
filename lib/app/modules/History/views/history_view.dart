@@ -229,29 +229,6 @@ class HistoryView extends GetView<HistoryController> {
               color: Colors.black87,
             ),
           ),
-          const Spacer(),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
-            decoration: BoxDecoration(
-              color: primaryColor.withValues(alpha: .08),
-              borderRadius: BorderRadius.circular(8.r),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.filter_list_rounded, size: 14.sp, color: primaryColor),
-                SizedBox(width: 4.w),
-                Text(
-                  "Filter",
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w600,
-                    color: primaryColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );

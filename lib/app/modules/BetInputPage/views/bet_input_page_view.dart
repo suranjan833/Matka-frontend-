@@ -355,7 +355,7 @@ class BetInputPageView extends GetView<BetInputPageController> {
         _buildFamilyChips(),
         SizedBox(height: 8.h),
         _buildPanaGrid(),
-        if (controller.betType.isBulkType) _buildSelectedPanaChips(),
+        _buildSelectedPanaIndicator(),
       ],
     );
   }
@@ -498,6 +498,73 @@ class BetInputPageView extends GetView<BetInputPageController> {
         ],
       );
     });
+  }
+
+  Widget _buildSelectedPanaIndicator() {
+    return Obx(() {
+      if (controller.betType.isBulkType) {
+        // Bulk type: show chips for all selected numbers
+        if (controller.selectedPanaNumbers.isEmpty) {
+          return const SizedBox.shrink();
+        }
+        return _buildSelectedPanaChips();
+      } else {
+        // Single selection: show one selected number chip
+        if (controller.selectedPanaNumber.value.isEmpty) {
+          return const SizedBox.shrink();
+        }
+        return _buildSingleSelectedChip();
+      }
+    });
+  }
+
+  Widget _buildSingleSelectedChip() {
+    final pana = controller.selectedPanaNumber.value;
+    final color = PanaChartData.familyColor(controller.selectedFamilyDigit.value);
+    return Padding(
+      padding: EdgeInsets.only(top: 12.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Selected:',
+            style: TextStyle(
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey.shade700,
+            ),
+          ),
+          SizedBox(height: 8.h),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: .15),
+              borderRadius: BorderRadius.circular(10.r),
+              border: Border.all(
+                color: color.withValues(alpha: .4),
+                width: 1.5.w,
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.check_circle_rounded, size: 16.sp, color: color),
+                SizedBox(width: 6.w),
+                Text(
+                  pana,
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w800,
+                    color: color,
+                    letterSpacing: 1.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildSelectedPanaChips() {

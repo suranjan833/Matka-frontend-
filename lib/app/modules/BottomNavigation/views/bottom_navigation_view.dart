@@ -6,6 +6,7 @@ import '../../../Config/app_config.dart';
 import '../../../routes/app_pages.dart';
 import '../../AllBids/views/all_bids_view.dart';
 import '../../History/views/history_view.dart';
+import '../../Results/views/results_view.dart';
 import '../../Wallet/views/wallet_view.dart';
 import '../../home/views/home_view.dart';
 import '../controllers/bottom_navigation_controller.dart';
@@ -24,7 +25,7 @@ class BottomNavigationView extends GetView<BottomNavigationController> {
       const AllBidsView(),
       HomeView(),
       WalletView(),
-      const Center(child: Text("")),
+      const ResultsView(),
     ];
 
     return Obx(
@@ -92,8 +93,8 @@ class BottomNavigationView extends GetView<BottomNavigationController> {
                   Expanded(
                     child: _navItem(
                       index: 4,
-                      icon: Icons.chat_bubble_outline,
-                      label: "Chat",
+                      icon: Icons.emoji_events_outlined,
+                      label: "Results",
                     ),
                   ),
                 ],

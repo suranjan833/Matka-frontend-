@@ -12,6 +12,18 @@ import '../modules/SignUpView/bindings/sign_up_view_binding.dart';
 import '../modules/SignUpView/views/sign_up_view_view.dart';
 import '../modules/Wallet/bindings/wallet_binding.dart';
 import '../modules/Wallet/views/wallet_view.dart';
+import '../modules/Wallet/AddFund/bindings/add_fund_binding.dart';
+import '../modules/Wallet/AddFund/views/add_fund_view.dart';
+import '../modules/Wallet/ManualDeposit/bindings/manual_deposit_binding.dart';
+import '../modules/Wallet/ManualDeposit/views/manual_deposit_view.dart';
+import '../modules/Wallet/WithdrawFunds/bindings/withdraw_funds_binding.dart';
+import '../modules/Wallet/WithdrawFunds/views/withdraw_funds_view.dart';
+import '../modules/Wallet/DepositHistory/bindings/deposit_history_binding.dart';
+import '../modules/Wallet/DepositHistory/views/deposit_history_view.dart';
+import '../modules/Wallet/WithdrawalHistory/bindings/withdrawal_history_binding.dart';
+import '../modules/Wallet/WithdrawalHistory/views/withdrawal_history_view.dart';
+import '../modules/Wallet/AddBankDetails/bindings/add_bank_details_binding.dart';
+import '../modules/Wallet/AddBankDetails/views/add_bank_details_view.dart';
 import '../modules/AccountStatement/bindings/account_statement_binding.dart';
 import '../modules/AccountStatement/views/account_statement_view.dart';
 import '../modules/TermsConditions/bindings/terms_conditions_binding.dart';
@@ -65,6 +77,36 @@ class AppPages {
       name: _Paths.WALLET,
       page: () => const WalletView(),
       binding: WalletBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_FUND,
+      page: () => const AddFundView(),
+      binding: AddFundBinding(),
+    ),
+    GetPage(
+      name: _Paths.MANUAL_DEPOSIT,
+      page: () => const ManualDepositView(),
+      binding: ManualDepositBinding(),
+    ),
+    GetPage(
+      name: _Paths.WITHDRAW_FUNDS,
+      page: () => const WithdrawFundsView(),
+      binding: WithdrawFundsBinding(),
+    ),
+    GetPage(
+      name: _Paths.DEPOSIT_HISTORY,
+      page: () => const DepositHistoryView(),
+      binding: DepositHistoryBinding(),
+    ),
+    GetPage(
+      name: _Paths.WITHDRAWAL_HISTORY,
+      page: () => const WithdrawalHistoryView(),
+      binding: WithdrawalHistoryBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_BANK_DETAILS,
+      page: () => const AddBankDetailsView(),
+      binding: AddBankDetailsBinding(),
     ),
     GetPage(
       name: _Paths.ACCOUNT_STATEMENT,

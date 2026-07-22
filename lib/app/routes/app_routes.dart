@@ -10,6 +10,12 @@ abstract class Routes {
   static const BOTTOM_NAVIGATION = _Paths.BOTTOM_NAVIGATION;
   static const ALL_BIDS = _Paths.ALL_BIDS;
   static const WALLET = _Paths.WALLET;
+  static const ADD_FUND = _Paths.ADD_FUND;
+  static const MANUAL_DEPOSIT = _Paths.MANUAL_DEPOSIT;
+  static const WITHDRAW_FUNDS = _Paths.WITHDRAW_FUNDS;
+  static const DEPOSIT_HISTORY = _Paths.DEPOSIT_HISTORY;
+  static const WITHDRAWAL_HISTORY = _Paths.WITHDRAWAL_HISTORY;
+  static const ADD_BANK_DETAILS = _Paths.ADD_BANK_DETAILS;
   static const ACCOUNT_STATEMENT = _Paths.ACCOUNT_STATEMENT;
   static const TERMS_CONDITIONS = _Paths.TERMS_CONDITIONS;
   static const GAME_PAGE = _Paths.GAME_PAGE;
@@ -25,6 +31,12 @@ abstract class _Paths {
   static const BOTTOM_NAVIGATION = '/bottom-navigation';
   static const ALL_BIDS = '/all-bids';
   static const WALLET = '/wallet';
+  static const ADD_FUND = '/add-fund';
+  static const MANUAL_DEPOSIT = '/manual-deposit';
+  static const WITHDRAW_FUNDS = '/withdraw-funds';
+  static const DEPOSIT_HISTORY = '/deposit-history';
+  static const WITHDRAWAL_HISTORY = '/withdrawal-history';
+  static const ADD_BANK_DETAILS = '/add-bank-details';
   static const ACCOUNT_STATEMENT = '/account-statement';
   static const TERMS_CONDITIONS = '/terms-conditions';
   static const GAME_PAGE = '/game-page';

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../History/views/history_view.dart';
 import '../controllers/wallet_controller.dart';
 
 class WalletView extends GetView<WalletController> {
@@ -162,66 +163,37 @@ class WalletView extends GetView<WalletController> {
           SizedBox(height: 14.h),
           Row(
             children: [
-              _balanceAction("Add", Icons.add_rounded, Colors.greenAccent),
-              SizedBox(width: 12.w),
-              _balanceAction(
-                "Withdraw",
-                Icons.remove_rounded,
-                Colors.orangeAccent,
-              ),
               const Spacer(),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: .15),
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.history_rounded,
-                      color: Colors.white.withValues(alpha: .7),
-                      size: 14.sp,
-                    ),
-                    SizedBox(width: 4.w),
-                    Text(
-                      "History",
-                      style: TextStyle(
-                        color: Colors.white.withValues(alpha: .85),
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w600,
+              GestureDetector(
+                onTap: () => Get.to(() => const HistoryView()),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: .15),
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.history_rounded,
+                        color: Colors.white.withValues(alpha: .7),
+                        size: 14.sp,
                       ),
-                    ),
-                  ],
+                      SizedBox(width: 4.w),
+                      Text(
+                        "History",
+                        style: TextStyle(
+                          color: Colors.white.withValues(alpha: .85),
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _balanceAction(String label, IconData icon, Color accent) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: .15),
-        borderRadius: BorderRadius.circular(10.r),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: accent, size: 16.sp),
-          SizedBox(width: 4.w),
-          Text(
-            label,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 13.sp,
-              fontWeight: FontWeight.w600,
-            ),
           ),
         ],
       ),

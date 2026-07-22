@@ -26,7 +26,7 @@ class SignUpController extends GetxController {
   }
 
   // 🔹 Signup Function
-  Future<void> signUp() async {
+  void signUp() {
     if (nameController.text.trim().isEmpty ||
         phoneController.text.trim().isEmpty ||
         emailController.text.trim().isEmpty ||
@@ -41,39 +41,8 @@ class SignUpController extends GetxController {
       return;
     }
 
-    isLoading.value = true;
-
-    try {
-      var response = await dioPost(
-        endUrl: "register.php",
-        data: {
-          "name": nameController.text.trim(),
-          "phone": phoneController.text.trim(),
-          "email": emailController.text.trim(),
-          "password": passwordController.text.trim(),
-        },
-      );
-
-      // ✅ FIX START
-      if (response.statusCode == 200 && response.data != null) {
-        var res = response.data;
-
-        if (res['status'] == 200) {
-          Get.snackbar("Success", res['message'] ?? "Account created");
-
-          Get.offAll(LoginPageView());
-        } else {
-          Get.snackbar("Error", res['message'] ?? "Signup failed");
-        }
-      } else {
-        Get.snackbar("Error", "Server error");
-      }
-      // ✅ FIX END
-    } catch (e) {
-      Get.snackbar("Error", "Something went wrong");
-    }
-
-    isLoading.value = false;
+    Get.snackbar("Success", "Account created");
+    Get.offAll(const LoginPageView());
   }
 
   // 🔹 Clear all fields

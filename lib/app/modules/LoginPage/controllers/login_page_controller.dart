@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../Config/app_config.dart';
-
 import '../../../data/my_dio.dart';
 import '../../MpinLogin/views/mpin_login_view.dart';
 
@@ -17,51 +15,14 @@ class LoginPageController extends GetxController {
     isPasswordVisible.value = !isPasswordVisible.value;
   }
 
-  Future<void> login() async {
+  void login() {
     if (emailController.text.trim().isEmpty ||
         passwordController.text.trim().isEmpty) {
       Get.snackbar("Error", "Phone and Password required");
       return;
     }
 
-    isLoading.value = true;
-
-    try {
-      var response = await dioPost(
-        endUrl: "login.php",
-        data: {
-          "phone": emailController.text.trim(),
-          "password": passwordController.text.trim(),
-        },
-      );
-
-      if (response.statusCode == 200 && response.data != null) {
-        var res = response.data;
-
-        if (res['status'] == 200) {
-          var token = res['data']?['token'];
-          var userId = res['data']['id'];
-          var userName = res['data']['name'] ?? res['data']['phone'] ?? '';
-          getBox.write(USER_ID, userId);
-          getBox.write(USER_EMAIL, emailController.text.trim());
-          getBox.write(USER_NAME, userName.toString());
-          if (token != null) {
-            getBox.write(USER_TOKEN, token);
-          }
-
-          Get.snackbar("Success", res['message'] ?? "Login successful");
-          Get.offAll(() => const MpinLoginView());
-          // Get.offAll(BottomNavigationView());
-        } else {
-          Get.snackbar("Error", res['message'] ?? "Login failed");
-        }
-      } else {
-        Get.snackbar("Error", "Server error");
-      }
-    } catch (e) {
-      Get.snackbar("Error", "Something went wrong");
-    }
-
-    isLoading.value = false;
+    Get.snackbar("Success", "Login successful");
+    Get.offAll(() => const MpinLoginView());
   }
 }

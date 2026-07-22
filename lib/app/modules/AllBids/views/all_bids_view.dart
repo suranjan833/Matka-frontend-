@@ -204,23 +204,14 @@ class AllBidsView extends GetView<AllBidsController> {
   Widget _menuCard({required String title, required int index}) {
     final icons = [
       Icons.receipt_long_rounded,
-      Icons.payments_rounded,
-      Icons.thumb_up_alt_rounded,
-      Icons.thumb_down_alt_rounded,
     ];
 
     final colors = [
       const Color(0xff1673E6),
-      const Color(0xff0EA5E9),
-      const Color(0xff22C55E),
-      const Color(0xffEF4444),
     ];
 
     final subtitles = [
       "View all your placed bids",
-      "Track fund requests",
-      "Approved credit transactions",
-      "Approved debit transactions",
     ];
 
     final icon = icons[index % icons.length];

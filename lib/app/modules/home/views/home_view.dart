@@ -4,6 +4,9 @@ import 'package:get/get.dart';
 
 import '../../../routes/app_pages.dart';
 import '../../BottomNavigation/controllers/bottom_navigation_controller.dart';
+import '../../Support/views/support_view.dart';
+import '../../Wallet/AddFund/views/add_fund_view.dart';
+import '../../Wallet/WithdrawFunds/views/withdraw_funds_view.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -221,12 +224,18 @@ class HomeView extends GetView<HomeController> {
           SizedBox(height: 14.h),
           Row(
             children: [
-              _actionChip("Deposit", Icons.add_rounded, Colors.greenAccent),
+              GestureDetector(
+                onTap: () => Get.to(() => const AddFundView()),
+                child: _actionChip("Deposit", Icons.add_rounded, Colors.greenAccent),
+              ),
               SizedBox(width: 12.w),
-              _actionChip(
-                "Withdraw",
-                Icons.arrow_downward_rounded,
-                Colors.orangeAccent,
+              GestureDetector(
+                onTap: () => Get.to(() => const WithdrawFundsView()),
+                child: _actionChip(
+                  "Withdraw",
+                  Icons.arrow_downward_rounded,
+                  Colors.orangeAccent,
+                ),
               ),
               const Spacer(),
               Container(
@@ -316,44 +325,48 @@ class HomeView extends GetView<HomeController> {
 
   Widget _buildQuickActions() {
     final actions = [
-      ("Play Now", Icons.play_arrow_rounded, primaryColor),
-      ("Results", Icons.emoji_events_outlined, const Color(0xff22C55E)),
-      ("Rules", Icons.description_outlined, const Color(0xff0EA5E9)),
-      ("Support", Icons.headset_mic_rounded, const Color(0xff8B5CF6)),
+      ("Play Now", Icons.play_arrow_rounded, primaryColor, null),
+      ("Results", Icons.emoji_events_outlined, const Color(0xff22C55E), null),
+      ("Rules", Icons.description_outlined, const Color(0xff0EA5E9), null),
+      ("Support", Icons.headset_mic_rounded, const Color(0xff8B5CF6), () => Get.to(() => const SupportView())),
     ];
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Row(
         children: actions.map((item) {
-          return Expanded(child: _quickActionItem(item.$1, item.$2, item.$3));
+          return Expanded(child: _quickActionItem(item.$1, item.$2, item.$3, onTap: item.$4));
         }).toList(),
       ),
     );
   }
 
-  Widget _quickActionItem(String label, IconData icon, Color color) {
-    return Column(
-      children: [
-        Container(
-          width: 48.w,
-          height: 48.w,
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: .1),
-            shape: BoxShape.circle,
+  Widget _quickActionItem(String label, IconData icon, Color color, {VoidCallback? onTap}) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(12.r),
+      onTap: onTap,
+      child: Column(
+        children: [
+          Container(
+            width: 48.w,
+            height: 48.w,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: .1),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: color, size: 22.sp),
           ),
-          child: Icon(icon, color: color, size: 22.sp),
-        ),
-        SizedBox(height: 6.h),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 11.sp,
-            fontWeight: FontWeight.w600,
-            color: Colors.grey.shade700,
+          SizedBox(height: 6.h),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 11.sp,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey.shade700,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
