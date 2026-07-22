@@ -88,23 +88,8 @@ class WalletView extends GetView<WalletController> {
             ),
           ),
           const Spacer(),
-          _iconBadge(Icons.notifications_outlined),
-          SizedBox(width: 8.w),
-          _iconBadge(Icons.more_vert_rounded),
         ],
       ),
-    );
-  }
-
-  Widget _iconBadge(IconData icon) {
-    return Container(
-      width: 38.w,
-      height: 38.w,
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(11.r),
-      ),
-      child: Icon(icon, color: Colors.black54, size: 20.sp),
     );
   }
 
