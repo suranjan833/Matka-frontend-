@@ -327,7 +327,7 @@ class HomeView extends GetView<HomeController> {
     final actions = [
       ("Play Now", Icons.play_arrow_rounded, primaryColor, null),
       ("Results", Icons.emoji_events_outlined, const Color(0xff22C55E), null),
-      ("Rules", Icons.description_outlined, const Color(0xff0EA5E9), null),
+      ("Rules", Icons.description_outlined, const Color(0xff0EA5E9), () => Get.toNamed(Routes.RULES)),
       ("Support", Icons.headset_mic_rounded, const Color(0xff8B5CF6), () => Get.to(() => const SupportView())),
     ];
 

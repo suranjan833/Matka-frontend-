@@ -93,100 +93,95 @@ class SupportView extends GetView<SupportController> {
   }
 
   Widget _buildWhatsAppCard() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16.w),
-      padding: EdgeInsets.all(20.w),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xff25D366), Color(0xff128C7E)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(20.r),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xff25D366).withValues(alpha: .3),
-            blurRadius: 16,
-            offset: const Offset(0, 6),
+    return Center(
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 16.w),
+        padding: EdgeInsets.all(24.w),
+        constraints: BoxConstraints(maxWidth: 360.w),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [Color(0xff25D366), Color(0xff128C7E)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 52.w,
-                height: 52.w,
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: .18),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.chat_rounded,
-                  color: Colors.white,
-                  size: 28.sp,
-                ),
+          borderRadius: BorderRadius.circular(24.r),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xff25D366).withValues(alpha: .3),
+              blurRadius: 20,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 60.w,
+              height: 60.w,
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: .18),
+                shape: BoxShape.circle,
               ),
-              SizedBox(width: 14.w),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              child: Icon(
+                Icons.chat_rounded,
+                color: Colors.white,
+                size: 30.sp,
+              ),
+            ),
+            SizedBox(height: 16.h),
+            Text(
+              "Chat with us",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20.sp,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            SizedBox(height: 6.h),
+            Text(
+              "Get instant support via WhatsApp",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white.withValues(alpha: .8),
+                fontSize: 13.sp,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            SizedBox(height: 20.h),
+            SizedBox(
+              width: double.infinity,
+              height: 50.h,
+              child: ElevatedButton(
+                onPressed: () => controller.openWhatsApp(),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: const Color(0xff25D366),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.r),
+                  ),
+                  elevation: 0,
+                  padding: EdgeInsets.zero,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Icon(Icons.chat_rounded, size: 18.sp),
+                    SizedBox(width: 8.w),
                     Text(
-                      "Chat with us",
+                      "Start WhatsApp Chat",
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17.sp,
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    SizedBox(height: 3.h),
-                    Text(
-                      "Instant support via WhatsApp",
-                      style: TextStyle(
-                        color: Colors.white.withValues(alpha: .8),
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
-          SizedBox(height: 16.h),
-          SizedBox(
-            width: double.infinity,
-            height: 48.h,
-            child: ElevatedButton(
-              onPressed: () => controller.openWhatsApp(),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: const Color(0xff25D366),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14.r),
-                ),
-                elevation: 0,
-                padding: EdgeInsets.zero,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.chat_rounded, size: 18.sp),
-                  SizedBox(width: 8.w),
-                  Text(
-                    "Start WhatsApp Chat",
-                    style: TextStyle(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
-              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

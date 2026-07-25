@@ -28,6 +28,8 @@ import '../modules/AccountStatement/bindings/account_statement_binding.dart';
 import '../modules/AccountStatement/views/account_statement_view.dart';
 import '../modules/TermsConditions/bindings/terms_conditions_binding.dart';
 import '../modules/TermsConditions/views/terms_conditions_view.dart';
+import '../modules/Rules/bindings/rules_binding.dart';
+import '../modules/Rules/views/rules_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/GamePage/bindings/game_page_binding.dart';
@@ -117,6 +119,11 @@ class AppPages {
       name: _Paths.TERMS_CONDITIONS,
       page: () => const TermsConditionsView(),
       binding: TermsConditionsBinding(),
+    ),
+    GetPage(
+      name: _Paths.RULES,
+      page: () => const RulesView(),
+      binding: RulesBinding(),
     ),
     GetPage(
       name: _Paths.GAME_PAGE,

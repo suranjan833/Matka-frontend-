@@ -18,6 +18,7 @@ abstract class Routes {
   static const ADD_BANK_DETAILS = _Paths.ADD_BANK_DETAILS;
   static const ACCOUNT_STATEMENT = _Paths.ACCOUNT_STATEMENT;
   static const TERMS_CONDITIONS = _Paths.TERMS_CONDITIONS;
+  static const RULES = _Paths.RULES;
   static const GAME_PAGE = _Paths.GAME_PAGE;
   static const BET_INPUT = _Paths.BET_INPUT;
 }
@@ -39,6 +40,7 @@ abstract class _Paths {
   static const ADD_BANK_DETAILS = '/add-bank-details';
   static const ACCOUNT_STATEMENT = '/account-statement';
   static const TERMS_CONDITIONS = '/terms-conditions';
+  static const RULES = '/rules';
   static const GAME_PAGE = '/game-page';
   static const BET_INPUT = '/bet-input';
 }
