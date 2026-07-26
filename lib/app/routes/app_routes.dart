@@ -21,6 +21,8 @@ abstract class Routes {
   static const RULES = _Paths.RULES;
   static const GAME_PAGE = _Paths.GAME_PAGE;
   static const BET_INPUT = _Paths.BET_INPUT;
+  static const SET_MPIN = _Paths.SET_MPIN;
+  static const FORGOT_MPIN = _Paths.FORGOT_MPIN;
 }
 
 abstract class _Paths {
@@ -43,4 +45,6 @@ abstract class _Paths {
   static const RULES = '/rules';
   static const GAME_PAGE = '/game-page';
   static const BET_INPUT = '/bet-input';
+  static const SET_MPIN = '/set-mpin';
+  static const FORGOT_MPIN = '/forgot-mpin';
 }

@@ -1,14 +1,38 @@
 import 'package:get/get.dart';
 
+import '../../../data/my_dio.dart';
+import '../models/result_model.dart';
+
 class ResultsController extends GetxController {
-  final RxList<Map<String, dynamic>> results = <Map<String, dynamic>>[
-    {'game': 'SITA MORNING', 'open': '7', 'close': '4', 'date': '2024-12-15'},
-    {'game': 'STAR TARA MORNING', 'open': '2', 'close': '8', 'date': '2024-12-15'},
-    {'game': 'ANDHRA MORNING', 'open': '5', 'close': '1', 'date': '2024-12-15'},
-    {'game': 'SRIDEVI', 'open': '3', 'close': '9', 'date': '2024-12-14'},
-    {'game': 'KALYAN', 'open': '6', 'close': '2', 'date': '2024-12-14'},
-    {'game': 'MILAN DAY', 'open': '8', 'close': '5', 'date': '2024-12-14'},
-    {'game': 'SITA MORNING', 'open': '1', 'close': '7', 'date': '2024-12-13'},
-    {'game': 'STAR TARA MORNING', 'open': '9', 'close': '3', 'date': '2024-12-13'},
-  ].obs;
+  final RxList<Map<String, dynamic>> results = <Map<String, dynamic>>[].obs;
+  final RxBool isLoading = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchResults();
+  }
+
+  Future<void> fetchResults() async {
+    isLoading.value = true;
+
+    try {
+      final response = await dioPost(
+        data: {"market_id": 0},
+        endUrl: "get_published_results.php",
+      );
+
+      final data = response.data;
+      if (data['status'] == 1 && data['data'] != null) {
+        final List<dynamic> resultList = data['data'];
+        results.value = resultList.map((r) {
+          return ResultModel.fromJson(r as Map<String, dynamic>).toViewModel();
+        }).toList();
+      }
+    } catch (e) {
+      // Keep empty list on error
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }

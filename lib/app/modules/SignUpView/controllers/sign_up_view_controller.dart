@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
+import '../../../Config/app_config.dart';
 import '../../../data/my_dio.dart';
 import '../../LoginPage/views/login_page_view.dart';
 
 class SignUpController extends GetxController {
   // 🔹 Text Controllers
   final nameController = TextEditingController();
-  final phoneController = TextEditingController(); // ✅ added
+  final phoneController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController(); // ✅ added
+  final confirmPasswordController = TextEditingController();
 
   // 🔹 Loading State
   var isLoading = false.obs;
@@ -26,7 +28,7 @@ class SignUpController extends GetxController {
   }
 
   // 🔹 Signup Function
-  void signUp() {
+  Future<void> signUp() async {
     if (nameController.text.trim().isEmpty ||
         phoneController.text.trim().isEmpty ||
         emailController.text.trim().isEmpty ||
@@ -36,13 +38,45 @@ class SignUpController extends GetxController {
       return;
     }
 
+    if (phoneController.text.trim().length != 10) {
+      Get.snackbar("Error", "Phone number must be 10 digits");
+      return;
+    }
+
     if (passwordController.text != confirmPasswordController.text) {
       Get.snackbar("Error", "Passwords do not match");
       return;
     }
 
-    Get.snackbar("Success", "Account created");
-    Get.offAll(const LoginPageView());
+    isLoading.value = true;
+
+    try {
+      final response = await dioPost(
+        data: {
+          "name": nameController.text.trim(),
+          "email": emailController.text.trim(),
+          "phone": phoneController.text.trim(),
+          "password": passwordController.text,
+        },
+        endUrl: "register.php",
+      );
+
+      final data = response.data;
+      if (data['status'] == 200) {
+        // Store phone for MPIN login flow
+        final box = GetStorage();
+        box.write(USER_PHONE, phoneController.text.trim());
+
+        Get.snackbar("Success", data['message'] ?? "Account created successfully");
+        Get.offAll(const LoginPageView());
+      } else {
+        Get.snackbar("Error", data['message'] ?? "Registration failed");
+      }
+    } catch (e) {
+      Get.snackbar("Error", "Something went wrong");
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   // 🔹 Clear all fields

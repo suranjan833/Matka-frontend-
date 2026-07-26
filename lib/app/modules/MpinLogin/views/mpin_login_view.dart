@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../routes/app_pages.dart';
 import '../controllers/mpin_login_controller.dart';
 
 class MpinLoginView extends GetView<MpinLoginController> {
@@ -59,7 +60,7 @@ class MpinLoginView extends GetView<MpinLoginController> {
                   borderRadius: BorderRadius.circular(24.r),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(.05),
+                      color: Colors.black.withValues(alpha: .05),
                       blurRadius: 10,
                     ),
                   ],
@@ -96,17 +97,28 @@ class MpinLoginView extends GetView<MpinLoginController> {
 
               SizedBox(height: 20.h),
 
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {
-                    /// Forgot MPIN
-                  },
-                  child: Text(
-                    "Forgot MPIN?",
-                    style: TextStyle(fontSize: 14.sp, color: Colors.black87),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Get.toNamed(Routes.FORGOT_MPIN);
+                    },
+                    child: Text(
+                      "Forgot MPIN?",
+                      style: TextStyle(fontSize: 14.sp, color: Colors.red.shade400),
+                    ),
                   ),
-                ),
+                  TextButton(
+                    onPressed: () {
+                      Get.toNamed(Routes.SET_MPIN);
+                    },
+                    child: Text(
+                      "Set / Change",
+                      style: TextStyle(fontSize: 14.sp, color: Colors.black87),
+                    ),
+                  ),
+                ],
               ),
 
               SizedBox(height: 40.h),

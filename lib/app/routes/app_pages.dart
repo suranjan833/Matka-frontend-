@@ -4,10 +4,14 @@ import '../modules/AllBids/bindings/all_bids_binding.dart';
 import '../modules/AllBids/views/all_bids_view.dart';
 import '../modules/BottomNavigation/bindings/bottom_navigation_binding.dart';
 import '../modules/BottomNavigation/views/bottom_navigation_view.dart';
+import '../modules/ForgotMpin/bindings/forgot_mpin_binding.dart';
+import '../modules/ForgotMpin/views/forgot_mpin_view.dart';
 import '../modules/LoginPage/bindings/login_page_binding.dart';
 import '../modules/LoginPage/views/login_page_view.dart';
 import '../modules/MpinLogin/bindings/mpin_login_binding.dart';
 import '../modules/MpinLogin/views/mpin_login_view.dart';
+import '../modules/SetMpin/bindings/set_mpin_binding.dart';
+import '../modules/SetMpin/views/set_mpin_view.dart';
 import '../modules/SignUpView/bindings/sign_up_view_binding.dart';
 import '../modules/SignUpView/views/sign_up_view_view.dart';
 import '../modules/Wallet/bindings/wallet_binding.dart';
@@ -134,6 +138,16 @@ class AppPages {
       name: _Paths.BET_INPUT,
       page: () => const BetInputPageView(),
       binding: BetInputPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.SET_MPIN,
+      page: () => const SetMpinView(),
+      binding: SetMpinBinding(),
+    ),
+    GetPage(
+      name: _Paths.FORGOT_MPIN,
+      page: () => const ForgotMpinView(),
+      binding: ForgotMpinBinding(),
     ),
   ];
 }

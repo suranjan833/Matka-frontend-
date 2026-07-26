@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../core/utils/market_time_utils.dart';
 import '../../../routes/app_pages.dart';
 import '../../BottomNavigation/controllers/bottom_navigation_controller.dart';
 import '../../Support/views/support_view.dart';
@@ -443,6 +444,19 @@ class HomeView extends GetView<HomeController> {
           child: InkWell(
             borderRadius: BorderRadius.circular(18.r),
             onTap: () {
+              final check = MarketTimeUtils.canPlaceBet(market);
+              if (!check.canBet) {
+                Get.snackbar(
+                  'Market Closed',
+                  check.message,
+                  backgroundColor: const Color(0xffFEE2E2),
+                  colorText: const Color(0xffDC2626),
+                  icon: const Icon(Icons.lock_clock_rounded, color: Color(0xffDC2626)),
+                  snackPosition: SnackPosition.TOP,
+                  duration: const Duration(seconds: 3),
+                );
+                return;
+              }
               Get.toNamed(Routes.GAME_PAGE, arguments: market);
             },
             child: Padding(

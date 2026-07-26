@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../core/utils/market_time_utils.dart';
 import '../../../routes/app_pages.dart';
 import '../../BetType/bet_type.dart';
 import '../controllers/game_page_controller.dart';
@@ -283,6 +284,19 @@ class GamePageView extends GetView<GamePageController> {
       },
       child: GestureDetector(
         onTap: () {
+          final check = MarketTimeUtils.canPlaceBet(controller.market);
+          if (!check.canBet) {
+            Get.snackbar(
+              'Betting Closed',
+              check.message,
+              backgroundColor: const Color(0xffFEE2E2),
+              colorText: const Color(0xffDC2626),
+              icon: const Icon(Icons.lock_clock_rounded, color: Color(0xffDC2626)),
+              snackPosition: SnackPosition.TOP,
+              duration: const Duration(seconds: 3),
+            );
+            return;
+          }
           Get.toNamed(
             Routes.BET_INPUT,
             arguments: {

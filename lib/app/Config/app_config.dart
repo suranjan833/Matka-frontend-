@@ -12,6 +12,7 @@ const String IS_USER_LOGGED_IN = "IS_USER_LOGGED_IN";
 const String USER_TOKEN = "TOKEN";
 const String USER_EMAIL = "user_email";
 const String USER_PASSWORD = "password";
+const String USER_PHONE = "user_phone";
 const String USER_LOGIN = "login_true";
 const String HIDEBUYNOW = "buy_now";
 const String USER_OTP = "MY OTP";

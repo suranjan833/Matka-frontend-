@@ -115,6 +115,7 @@ class SignUpView extends GetView<SignUpController> {
                         hint: "Phone Number",
                         icon: Icons.phone_outlined,
                         keyboardType: TextInputType.phone,
+                        maxLength: 10,
                       ),
                       SizedBox(height: 16.h),
 
@@ -271,53 +272,48 @@ class SignUpView extends GetView<SignUpController> {
     required String hint,
     required IconData icon,
     TextInputType? keyboardType,
+    int? maxLength,
     bool obscureText = false,
     Widget? suffixIcon,
   }) {
-    return StatefulBuilder(
-      builder: (context, setLocalState) {
-        return TextField(
-          controller: controller,
-          obscureText: obscureText,
-          keyboardType: keyboardType,
-          onChanged: (_) => setLocalState(() {}),
-          style: TextStyle(fontSize: 15.sp, color: Colors.black87),
-          decoration: InputDecoration(
-            counterText: "",
-            hintText: hint,
-            hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 15.sp),
-            prefixIcon: Icon(
-              icon,
-              color: controller.text.isNotEmpty
-                  ? primaryColor
-                  : Colors.grey.shade400,
-              size: 22.sp,
-            ),
-            suffixIcon: suffixIcon,
-            filled: true,
-            fillColor: const Color(0xFFF5F7FA),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 16.w,
-              vertical: 16.h,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14.r),
-              borderSide: BorderSide.none,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14.r),
-              borderSide: BorderSide(color: Colors.grey.shade100),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14.r),
-              borderSide: BorderSide(
-                color: primaryColor.withValues(alpha: .5),
-                width: 1.5,
-              ),
-            ),
+    return TextField(
+      controller: controller,
+      obscureText: obscureText,
+      keyboardType: keyboardType,
+      maxLength: maxLength,
+      style: TextStyle(fontSize: 15.sp, color: Colors.black87),
+      decoration: InputDecoration(
+        counterText: "",
+        hintText: hint,
+        hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 15.sp),
+        prefixIcon: Icon(
+          icon,
+          color: primaryColor,
+          size: 22.sp,
+        ),
+        suffixIcon: suffixIcon,
+        filled: true,
+        fillColor: const Color(0xFFF5F7FA),
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 16.w,
+          vertical: 16.h,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14.r),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14.r),
+          borderSide: BorderSide(color: Colors.grey.shade100),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14.r),
+          borderSide: BorderSide(
+            color: primaryColor.withValues(alpha: .5),
+            width: 1.5,
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

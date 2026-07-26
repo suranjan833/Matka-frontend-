@@ -186,6 +186,14 @@ class BottomNavigationView extends GetView<BottomNavigationController> {
                       },
                     ),
                     _drawerItem(
+                      icon: Icons.lock_outline,
+                      title: "Set / Change MPIN",
+                      onTap: () {
+                        Get.back();
+                        Get.toNamed(Routes.SET_MPIN);
+                      },
+                    ),
+                    _drawerItem(
                       icon: Icons.description_outlined,
                       title: "Terms & Condition",
                       onTap: () {

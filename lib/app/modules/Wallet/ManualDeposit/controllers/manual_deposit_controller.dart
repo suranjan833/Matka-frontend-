@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../Config/app_config.dart';
+import '../../../../data/my_dio.dart';
+
 class ManualDepositController extends GetxController {
   final amountController = TextEditingController();
   final transactionIdController = TextEditingController();
   final RxDouble amount = 0.0.obs;
   final RxString selectedImagePath = ''.obs;
   final RxString errorMessage = ''.obs;
+  final RxBool isLoading = false.obs;
 
   void onAmountChanged(String value) {
     errorMessage.value = '';
@@ -14,7 +18,7 @@ class ManualDepositController extends GetxController {
   }
 
   Future<void> pickImage() async {
-    // Simulate picking an image
+    // Simulate picking an image - in production use image_picker
     selectedImagePath.value = 'selected_image_path';
     errorMessage.value = '';
   }
@@ -39,39 +43,71 @@ class ManualDepositController extends GetxController {
     return true;
   }
 
-  void submitDeposit() {
+  Future<void> submitDeposit() async {
     if (!validate()) return;
 
-    Get.dialog(
-      AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.check_circle_rounded, color: Color(0xff22C55E), size: 56),
-            SizedBox(height: 16),
-            const Text('Deposit Request Submitted!', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
-            SizedBox(height: 8),
-            Text('₹${amount.value.toStringAsFixed(0)}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-            SizedBox(height: 4),
-            const Text('Your deposit will be verified within 24 hours.', style: TextStyle(fontSize: 13, color: Colors.grey)),
-            SizedBox(height: 24),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () { Get.back(); Get.back(); },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xff1673E6),
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    isLoading.value = true;
+
+    try {
+      final userId = getBox.read(USER_ID) ?? '0';
+
+      final response = await dioPost(
+        data: {
+          "user_id": int.tryParse(userId.toString()) ?? 0,
+          "amount": amount.value,
+          "transaction_id": transactionIdController.text.trim(),
+          "type": "Manual",
+          "image": selectedImagePath.value,
+        },
+        endUrl: "add_money.php",
+        isFile: true,
+      );
+
+      final data = response.data;
+      if (data['status'] == 200) {
+        Get.dialog(
+          AlertDialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.check_circle_rounded, color: Color(0xff22C55E), size: 56),
+                SizedBox(height: 16),
+                const Text('Deposit Request Submitted!', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+                SizedBox(height: 8),
+                Text('₹${amount.value.toStringAsFixed(0)}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                SizedBox(height: 4),
+                const Text('Your deposit will be verified within 24 hours.', style: TextStyle(fontSize: 13, color: Colors.grey)),
+                SizedBox(height: 24),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () { Get.back(); Get.back(); },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xff1673E6),
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    ),
+                    child: const Text('Done', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+                  ),
                 ),
-                child: const Text('Done', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
-    );
+          ),
+        );
+
+        amountController.clear();
+        transactionIdController.clear();
+        selectedImagePath.value = '';
+        amount.value = 0.0;
+      } else {
+        Get.snackbar('Error', data['message'] ?? 'Deposit failed');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Something went wrong');
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   @override

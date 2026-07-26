@@ -1,69 +1,52 @@
 import 'package:get/get.dart';
 
-class HistoryController extends GetxController {
-  final RxList<Map<String, dynamic>> historyList = <Map<String, dynamic>>[
-    {
-      "game": "SITA MORNING",
-      "type": "Single Digit",
-      "value": "7",
-      "amount": 500,
-      "profit": 4500,
-      "status": "Won",
-      "date": "2024-12-15",
-      "time": "10:30 AM",
-    },
-    {
-      "game": "STAR TARA MORNING",
-      "type": "Jodi Digit",
-      "value": "47",
-      "amount": 200,
-      "profit": -200,
-      "status": "Lost",
-      "date": "2024-12-15",
-      "time": "11:00 AM",
-    },
-    {
-      "game": "ANDHRA MORNING",
-      "type": "Single Pana",
-      "value": "228",
-      "amount": 300,
-      "profit": 5400,
-      "status": "Won",
-      "date": "2024-12-14",
-      "time": "11:25 AM",
-    },
-    {
-      "game": "SRIDEVI",
-      "type": "Jodi Digit",
-      "value": "89",
-      "amount": 150,
-      "profit": -150,
-      "status": "Lost",
-      "date": "2024-12-14",
-      "time": "12:30 PM",
-    },
-    {
-      "game": "KALYAN",
-      "type": "Single Digit",
-      "value": "3",
-      "amount": 1000,
-      "profit": 9000,
-      "status": "Won",
-      "date": "2024-12-13",
-      "time": "6:00 PM",
-    },
-    {
-      "game": "MILAN DAY",
-      "type": "Double Pana",
-      "value": "567",
-      "amount": 250,
-      "profit": -250,
-      "status": "Lost",
-      "date": "2024-12-13",
-      "time": "3:15 PM",
-    },
-  ].obs;
+import '../../../Config/app_config.dart';
+import '../../../data/my_dio.dart';
+import '../models/bet_history_model.dart';
 
-  RxDouble totalInvested = 2400.0.obs;
-  RxDouble totalProfit = 18300.0.obs;
+class HistoryController extends GetxController {
+  final RxList<Map<String, dynamic>> historyList = <Map<String, dynamic>>[].obs;
+  final RxDouble totalInvested = 0.0.obs;
+  final RxDouble totalProfit = 0.0.obs;
+  final RxBool isLoading = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchBetHistory();
+  }
+
+  Future<void> fetchBetHistory() async {
+    isLoading.value = true;
+
+    try {
+      final userId = getBox.read(USER_ID) ?? '0';
+      final response = await dioPost(
+        data: {"user_id": int.tryParse(userId.toString()) ?? 0},
+        endUrl: "get_bet_history.php",
+      );
+
+      final data = response.data;
+      if (data['status'] == 200 && data['data'] != null) {
+        final List<dynamic> bets = data['data'];
+        historyList.value = bets.map((b) {
+          return BetHistoryModel.fromJson(b as Map<String, dynamic>).toViewModel();
+        }).toList();
+
+        // Calculate summary
+        double invested = 0;
+        double profit = 0;
+        for (final h in historyList) {
+          invested += (h['amount'] as double?) ?? 0;
+          profit += (h['profit'] as double?) ?? 0;
+        }
+        totalInvested.value = invested;
+        totalProfit.value = profit;
+      }
+    } catch (e) {
+      // Keep empty list on error
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }

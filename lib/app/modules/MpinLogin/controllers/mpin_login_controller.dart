@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../Config/app_config.dart';
+import '../../../data/my_dio.dart';
 import '../../BottomNavigation/views/bottom_navigation_view.dart';
 
 class MpinLoginController extends GetxController {
@@ -38,16 +40,44 @@ class MpinLoginController extends GetxController {
     isLoading.value = true;
 
     try {
-      /// Call API here
+      final phone = getBox.read(USER_PHONE) ?? '';
 
-      await Future.delayed(const Duration(seconds: 1));
+      final response = await dioPost(
+        data: {
+          "phone": phone,
+          "mpin": mpin,
+        },
+        endUrl: "mpin_login.php",
+      );
 
+      final data = response.data;
+      if (data['status'] == 200 && data['data'] != null) {
+        // Store token from MPIN login
+        final token = data['data']['token'] ?? '';
+        if (token.isNotEmpty) {
+          getBox.write(USER_TOKEN, token);
+        }
+        getBox.write(IS_USER_LOGGED_IN, true);
+
+        Get.snackbar(
+          "Success",
+          "MPIN Login Successful",
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        Get.offAll(() => const BottomNavigationView());
+      } else {
+        Get.snackbar(
+          "Error",
+          data['message'] ?? "MPIN login failed",
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
       Get.snackbar(
-        "Success",
-        "MPIN Login Successful",
+        "Error",
+        "Something went wrong",
         snackPosition: SnackPosition.BOTTOM,
       );
-      Get.offAll(() => BottomNavigationView());
     } finally {
       isLoading.value = false;
     }

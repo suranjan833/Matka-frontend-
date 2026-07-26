@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../Config/app_config.dart';
+import '../../../data/my_dio.dart';
 import '../AddFund/views/add_fund_view.dart';
 import '../ManualDeposit/views/manual_deposit_view.dart';
 import '../WithdrawFunds/views/withdraw_funds_view.dart';
@@ -43,6 +45,28 @@ class WalletController extends GetxController {
       icon: Icons.account_balance_outlined,
     ),
   ].obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchWalletBalance();
+  }
+
+  Future<void> fetchWalletBalance() async {
+    try {
+      final userId = getBox.read(USER_ID) ?? '0';
+      final response = await dioPost(
+        data: {"user_id": int.tryParse(userId.toString()) ?? 0},
+        endUrl: "get_wallet.php",
+      );
+      final data = response.data;
+      if (data['status'] == 200 && data['data'] != null) {
+        walletBalance.value = (data['data']['balance'] ?? 0).toDouble();
+      }
+    } catch (e) {
+      // Keep current balance
+    }
+  }
 
   void onMenuTap(int index) {
     switch (index) {

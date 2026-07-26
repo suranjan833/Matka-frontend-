@@ -3,6 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../BetType/bet_type.dart';
+import '../../../Config/app_config.dart';
+import '../../../core/utils/market_time_utils.dart';
+import '../../../data/my_dio.dart';
 import '../../../services/bet_slip_service.dart';
 
 class BetInputPageController extends GetxController {
@@ -14,6 +17,7 @@ class BetInputPageController extends GetxController {
 
   final RxString errorMessage = ''.obs;
   final RxString selectedSingleDigit = ''.obs;
+  final RxBool isPlacingBet = false.obs;
 
   // Pana chart selection
   final RxInt selectedFamilyDigit = 0.obs;
@@ -143,17 +147,68 @@ class BetInputPageController extends GetxController {
     betSlipService.clear();
   }
 
-  void placeBets() {
+  Future<void> placeBets() async {
     if (betSlipService.items.isEmpty) {
       errorMessage.value = 'No bets to place. Add at least one bet.';
       return;
     }
 
-    final count = betSlipService.itemCount;
-    final total = betSlipService.totalAmount;
+    // Check if market is still open for betting
+    final timeCheck = MarketTimeUtils.canPlaceBet(market);
+    if (!timeCheck.canBet) {
+      errorMessage.value = timeCheck.message;
+      isPlacingBet.value = false;
+      return;
+    }
 
-    betSlipService.clear();
+    if (isPlacingBet.value) return;
+    isPlacingBet.value = true;
 
+    try {
+      final userId = getBox.read(USER_ID) ?? '0';
+      final marketId = int.tryParse(market['id']?.toString() ?? market['market_id']?.toString() ?? '0') ?? 0;
+      final items = betSlipService.items;
+
+      // Place bets one by one or in bulk
+      int placedCount = 0;
+      double totalAmount = 0;
+
+      for (final item in items) {
+        final response = await dioPost(
+          data: {
+            "user_id": int.tryParse(userId.toString()) ?? 0,
+            "market_id": marketId,
+            "session": "open",
+            "game_type": item.betType.index + 1,
+            "number": item.numbers,
+            "amount": item.amount,
+          },
+          endUrl: "place_bet.php",
+        );
+
+        final data = response.data;
+        if (data['status'] == 1) {
+          placedCount++;
+          totalAmount += item.amount;
+        } else {
+          // Show error for this specific bet
+          Get.snackbar("Error", data['message'] ?? "Failed to place bet");
+        }
+      }
+
+      betSlipService.clear();
+
+      if (placedCount > 0) {
+        _showSuccessDialog(placedCount, totalAmount);
+      }
+    } catch (e) {
+      Get.snackbar("Error", "Something went wrong while placing bets");
+    } finally {
+      isPlacingBet.value = false;
+    }
+  }
+
+  void _showSuccessDialog(int count, double total) {
     Get.dialog(
       AlertDialog(
         shape: RoundedRectangleBorder(
